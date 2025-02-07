@@ -1,11 +1,12 @@
+import gleeunit/should
 import xo/mark
 
 pub fn swap_test() {
-  let assert mark.O = mark.swap(mark.X)
-  let assert mark.X = mark.swap(mark.O)
+  mark.swap(mark.X) |> should.equal(mark.O)
+  mark.swap(mark.O) |> should.equal(mark.X)
 }
 
 pub fn to_string_test() {
-  let assert "x" = mark.to_string(mark.X)
-  let assert "o" = mark.to_string(mark.O)
+  mark.to_string(mark.X) |> should.equal("x")
+  mark.to_string(mark.O) |> should.equal("o")
 }
