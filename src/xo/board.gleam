@@ -37,7 +37,7 @@ pub fn put(board: Board, pos: Position, mark: Mark) -> Board {
 // Query
 
 pub fn is_open(board: Board, pos: Position) -> Bool {
-  is_not_member(board, pos)
+  key_find(board, pos) == None
 }
 
 pub fn in_bounds(pos: Position) -> Bool {
@@ -47,7 +47,7 @@ pub fn in_bounds(pos: Position) -> Bool {
 }
 
 pub fn open_positions(board: Board) -> List(Position) {
-  list.filter(all_positions, is_not_member(board, _))
+  list.filter(all_positions, is_open(board, _))
 }
 
 // Convert
@@ -79,11 +79,7 @@ fn tile_to_string(tile: Tile) -> String {
   }
 }
 
-// Association List
-
-fn is_not_member(alist: List(#(a, b)), key: a) -> Bool {
-  key_find(alist, key) == None
-}
+// Keyword List
 
 fn key_find(keyword_list: List(#(a, b)), desired_key: a) -> Option(b) {
   case keyword_list {
