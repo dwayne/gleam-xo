@@ -17,7 +17,7 @@ pub const all_positions: List(Position) = [
   #(2, 2),
 ]
 
-// Types
+// Board
 
 pub type Board =
   List(Move)
