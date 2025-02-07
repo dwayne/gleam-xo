@@ -56,7 +56,7 @@ pub type Tile =
   Option(Mark)
 
 pub fn to_tiles(board: Board) -> List(Tile) {
-  list.map(all_positions, find(board, _))
+  list.map(all_positions, key_find(board, _))
 }
 
 pub type Cell =
@@ -82,16 +82,16 @@ fn tile_to_string(tile: Tile) -> String {
 // Association List
 
 fn is_not_member(alist: List(#(a, b)), key: a) -> Bool {
-  find(alist, key) == None
+  key_find(alist, key) == None
 }
 
-fn find(alist: List(#(a, b)), search_key: a) -> Option(b) {
-  case alist {
+fn key_find(keyword_list: List(#(a, b)), desired_key: a) -> Option(b) {
+  case keyword_list {
     [] -> None
     [#(key, value), ..rest] ->
-      case search_key == key {
+      case key == desired_key {
         True -> Some(value)
-        False -> find(rest, search_key)
+        False -> key_find(rest, desired_key)
       }
   }
 }
