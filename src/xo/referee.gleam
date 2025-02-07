@@ -1,12 +1,11 @@
 import gleam/list
-import gleam/option.{None, Some}
+import gleam/option.{type Option, None, Some}
 import xo/board.{type Board, type Tile}
 import xo/mark.{type Mark}
 
 pub type Outcome {
   Win(Mark, List(Location))
   Draw(Mark)
-  Undecided
 }
 
 pub type Location {
@@ -20,17 +19,17 @@ pub type Location {
   D2
 }
 
-pub fn decide(board: Board, mark: Mark) -> Outcome {
+pub fn decide(board: Board, mark: Mark) -> Option(Outcome) {
   let tiles = board.to_tiles(board)
 
   case find_win(tiles, mark) {
     [] ->
       case is_draw(tiles) {
-        True -> Draw(mark)
-        False -> Undecided
+        True -> Some(Draw(mark))
+        False -> None
       }
 
-    locations -> Win(mark, locations)
+    locations -> Some(Win(mark, locations))
   }
 }
 
