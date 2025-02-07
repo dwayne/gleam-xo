@@ -2,5 +2,11 @@
   "packages": [
     "erlang@latest",
     "gleam@latest"
-  ]
+  ],
+  "shell": {
+    "init_hook": [
+      "alias f='gleam format'",
+      "alias t='gleam test'"
+    ]
+  }
 }
