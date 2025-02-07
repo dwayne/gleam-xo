@@ -1,12 +1,12 @@
 import gleam/list
 import gleam/option.{None, Some}
-import xo/board.{type Board, type Cell}
-import xo/mark.{type Mark}
-import xo/referee
+import xo/internal/board.{type Board, type Cell}
+import xo/internal/mark.{type Mark}
+import xo/internal/referee
 
 // Game
 
-pub type Game {
+pub opaque type Game {
   Playing(first: Player, turn: Player, board: Board)
   GameOver(first: Player, turn: Player, board: Board, outcome: referee.Outcome)
 }
@@ -25,7 +25,7 @@ pub fn start(player: Player) -> Game {
 // Modify
 
 pub type Position =
-  board.Position
+  #(Int, Int)
 
 pub fn play(game: Game, pos: Position) -> Result(Game, Error) {
   case game {

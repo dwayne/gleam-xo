@@ -1,5 +1,5 @@
-import xo/board.{type Board, type Position}
-import xo/mark.{type Mark}
+import xo/internal/board.{type Board, type Position}
+import xo/internal/mark.{type Mark}
 
 pub fn make_moves(mark: Mark, positions: List(Position)) -> Board {
   make_moves_helper([], mark, positions)

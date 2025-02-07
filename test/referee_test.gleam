@@ -1,25 +1,25 @@
 import gleam/option.{None, Some}
 import gleeunit/should
-import helpers.{make_moves}
-import xo/mark.{O, X}
-import xo/referee.{C3, Draw, R1, R3, Win, decide}
+import helpers
+import xo/internal/mark.{O, X}
+import xo/internal/referee.{C3, Draw, R1, R3, Win}
 
 pub fn decide_test() {
   // when X wins
   X
-  |> make_moves([#(0, 0), #(1, 0), #(0, 1), #(1, 1), #(0, 2)])
-  |> decide(X)
+  |> helpers.make_moves([#(0, 0), #(1, 0), #(0, 1), #(1, 1), #(0, 2)])
+  |> referee.decide(X)
   |> should.equal(Some(Win(X, [R1])))
 
   // when O wins
   O
-  |> make_moves([#(2, 0), #(1, 0), #(2, 1), #(1, 1), #(2, 2)])
-  |> decide(O)
+  |> helpers.make_moves([#(2, 0), #(1, 0), #(2, 1), #(1, 1), #(2, 2)])
+  |> referee.decide(O)
   |> should.equal(Some(Win(O, [R3])))
 
   // when the rare multi-win occurs
   X
-  |> make_moves([
+  |> helpers.make_moves([
     #(0, 0),
     #(1, 0),
     #(2, 2),
@@ -30,12 +30,12 @@ pub fn decide_test() {
     #(1, 1),
     #(0, 2),
   ])
-  |> decide(X)
+  |> referee.decide(X)
   |> should.equal(Some(Win(X, [R1, C3])))
 
   // when it's a draw
   X
-  |> make_moves([
+  |> helpers.make_moves([
     #(0, 0),
     #(1, 1),
     #(2, 2),
@@ -46,12 +46,12 @@ pub fn decide_test() {
     #(1, 2),
     #(1, 0),
   ])
-  |> decide(X)
+  |> referee.decide(X)
   |> should.equal(Some(Draw(X)))
 
   // after 2 moves it's still undecided
   X
-  |> make_moves([#(0, 0), #(1, 1)])
-  |> decide(O)
+  |> helpers.make_moves([#(0, 0), #(1, 1)])
+  |> referee.decide(O)
   |> should.equal(None)
 }

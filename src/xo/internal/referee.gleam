@@ -1,7 +1,7 @@
 import gleam/list
 import gleam/option.{type Option, None, Some}
-import xo/board.{type Board, type Tile}
-import xo/mark.{type Mark}
+import xo/internal/board.{type Board, type Tile}
+import xo/internal/mark.{type Mark}
 
 pub type Outcome {
   Win(Mark, List(Location))

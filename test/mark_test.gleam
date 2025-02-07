@@ -1,5 +1,5 @@
 import gleeunit/should
-import xo/mark.{O, X}
+import xo/internal/mark.{O, X}
 
 pub fn swap_test() {
   mark.swap(X) |> should.equal(O)

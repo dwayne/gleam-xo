@@ -1,7 +1,7 @@
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/string
-import xo/mark.{type Mark}
+import xo/internal/mark.{type Mark}
 
 // Constants
 
