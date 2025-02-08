@@ -55,20 +55,17 @@ pub fn open_positions(board: Board) -> List(Position) {
 pub type Tile =
   Option(Mark)
 
-pub fn to_tiles(board: Board) -> List(Tile) {
-  list.map(all_positions, key_find(board, _))
+pub fn map(board: Board, f: fn(Position, Tile) -> a) -> List(a) {
+  list.map(all_positions, fn(pos) { f(pos, key_find(board, pos)) })
 }
 
-pub type Cell =
-  #(Position, Tile)
-
-pub fn to_cells(board: Board) -> List(Cell) {
-  list.zip(all_positions, to_tiles(board))
+pub fn to_tiles(board: Board) -> List(Tile) {
+  map(board, fn(_, tile) { tile })
 }
 
 pub fn to_string(board: Board) -> String {
-  to_tiles(board)
-  |> list.map(tile_to_string)
+  board
+  |> map(fn(_, tile) { tile_to_string(tile) })
   |> string.concat
 }
 

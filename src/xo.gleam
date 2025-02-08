@@ -1,8 +1,9 @@
 import gleam/list
-import gleam/option.{None, Some}
-import xo/internal/board.{type Board, type Cell}
+import gleam/option.{type Option, None, Some}
+import gleam/string
+import xo/internal/board.{type Board}
 import xo/internal/mark.{type Mark}
-import xo/internal/referee
+import xo/internal/referee.{type Location, C1, C2, C3, D1, D2, R1, R2, R3}
 
 // Game
 
@@ -14,6 +15,13 @@ pub opaque type Game {
 pub type Player {
   X
   O
+}
+
+pub fn next_turn(player: Player) -> Player {
+  case player {
+    X -> O
+    O -> X
+  }
 }
 
 // Create
@@ -88,7 +96,7 @@ pub fn play_again(game: Game, rules: Rules) -> Game {
 // Query
 
 pub type State {
-  State(first: Player, turn: Player, cells: List(Cell), outcome: Outcome)
+  State(first: Player, turn: Player, outcome: Outcome)
 }
 
 pub type Outcome {
@@ -102,16 +110,37 @@ pub type Line =
 
 pub fn to_state(game: Game) -> State {
   case game {
-    Playing(first, turn, board) ->
-      State(first, turn, board.to_cells(board), Undecided)
+    Playing(first, turn, _) -> State(first, turn, Undecided)
 
-    GameOver(first, turn, board, outcome) ->
-      State(first, turn, board.to_cells(board), case outcome {
+    GameOver(first, turn, _, outcome) ->
+      State(first, turn, case outcome {
         referee.Win(mark, locations) ->
           Win(mark_to_player(mark), list.map(locations, location_to_line))
 
         referee.Draw(mark) -> Draw(mark_to_player(mark))
       })
+  }
+}
+
+pub type Tile =
+  Option(Player)
+
+pub fn map(game: Game, f: fn(Position, Tile) -> a) -> List(a) {
+  board.map(game.board, fn(pos, mark_tile) {
+    f(pos, option.map(mark_tile, mark_to_player))
+  })
+}
+
+pub fn to_string(game: Game) -> String {
+  map(game, fn(_, tile) { tile_to_string(tile) })
+  |> string.concat
+}
+
+fn tile_to_string(tile: Tile) -> String {
+  case tile {
+    Some(X) -> "x"
+    Some(O) -> "o"
+    None -> "."
   }
 }
 
@@ -131,22 +160,15 @@ fn mark_to_player(mark: Mark) -> Player {
   }
 }
 
-fn next_turn(player: Player) -> Player {
-  case player {
-    X -> O
-    O -> X
-  }
-}
-
-fn location_to_line(location: referee.Location) -> Line {
+fn location_to_line(location: Location) -> Line {
   case location {
-    referee.R1 -> #(#(0, 0), #(0, 1), #(0, 2))
-    referee.R2 -> #(#(1, 0), #(1, 1), #(1, 2))
-    referee.R3 -> #(#(2, 0), #(2, 1), #(2, 2))
-    referee.C1 -> #(#(0, 0), #(1, 0), #(2, 0))
-    referee.C2 -> #(#(0, 1), #(1, 1), #(2, 1))
-    referee.C3 -> #(#(0, 2), #(1, 2), #(2, 2))
-    referee.D1 -> #(#(0, 0), #(1, 1), #(2, 2))
-    referee.D2 -> #(#(0, 2), #(1, 1), #(2, 0))
+    R1 -> #(#(0, 0), #(0, 1), #(0, 2))
+    R2 -> #(#(1, 0), #(1, 1), #(1, 2))
+    R3 -> #(#(2, 0), #(2, 1), #(2, 2))
+    C1 -> #(#(0, 0), #(1, 0), #(2, 0))
+    C2 -> #(#(0, 1), #(1, 1), #(2, 1))
+    C3 -> #(#(0, 2), #(1, 2), #(2, 2))
+    D1 -> #(#(0, 0), #(1, 1), #(2, 2))
+    D2 -> #(#(0, 2), #(1, 1), #(2, 0))
   }
 }
