@@ -28,6 +28,7 @@ pub fn next_turn(player: Player) -> Player {
 
 // Create
 
+/// Start a new game such that the given player plays first.
 pub fn start(player: Player) -> Game {
   Playing(player, player, [])
 }
@@ -74,6 +75,13 @@ pub type Rules {
   Rules(winner_plays_first: Bool, take_turns_on_draw: Bool)
 }
 
+/// The default rules are that the winner plays first and that you must take turns after a draw.
+pub const default_rules = Rules(
+  winner_plays_first: True,
+  take_turns_on_draw: True,
+)
+
+/// Reset the game while respecting the given rules.
 pub fn play_again(game: Game, rules: Rules) -> Game {
   case game {
     Playing(first, ..) -> start(first)
@@ -107,6 +115,7 @@ pub type Outcome {
   Undecided
 }
 
+/// The three positions that make up a winning row, column, or diagonal.
 pub type Line =
   #(Position, Position, Position)
 
