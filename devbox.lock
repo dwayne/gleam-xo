@@ -50,50 +50,50 @@
       }
     },
     "gleam@latest": {
-      "last_modified": "2025-01-25T23:17:58Z",
-      "resolved": "github:NixOS/nixpkgs/b582bb5b0d7af253b05d58314b85ab8ec46b8d19#gleam",
+      "last_modified": "2025-02-12T00:10:52Z",
+      "resolved": "github:NixOS/nixpkgs/83a2581c81ff5b06f7c1a4e7cc736a455dfcf7b4#gleam",
       "source": "devbox-search",
-      "version": "1.7.0",
+      "version": "1.8.1",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/9byiw2gl4q2csamls2xg4c3b33klsjhy-gleam-1.7.0",
+              "path": "/nix/store/libq3bp9kiymbbhbci43vjdmyhnjcmh2-gleam-1.8.1",
               "default": true
             }
           ],
-          "store_path": "/nix/store/9byiw2gl4q2csamls2xg4c3b33klsjhy-gleam-1.7.0"
+          "store_path": "/nix/store/libq3bp9kiymbbhbci43vjdmyhnjcmh2-gleam-1.8.1"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/i8hlp4wf9jrn6jx96dmjbb60qkc4s5dx-gleam-1.7.0",
+              "path": "/nix/store/g1mxni3vydpdyss7al72cpwbsdgk2rfn-gleam-1.8.1",
               "default": true
             }
           ],
-          "store_path": "/nix/store/i8hlp4wf9jrn6jx96dmjbb60qkc4s5dx-gleam-1.7.0"
+          "store_path": "/nix/store/g1mxni3vydpdyss7al72cpwbsdgk2rfn-gleam-1.8.1"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/cjvgkr2p8farlg49blwrqj7bf5m339pk-gleam-1.7.0",
+              "path": "/nix/store/qz6d0fjhsvwcgppgjpsgxjml67c5zf0z-gleam-1.8.1",
               "default": true
             }
           ],
-          "store_path": "/nix/store/cjvgkr2p8farlg49blwrqj7bf5m339pk-gleam-1.7.0"
+          "store_path": "/nix/store/qz6d0fjhsvwcgppgjpsgxjml67c5zf0z-gleam-1.8.1"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/kn2dnjp6ggnnvf1lbi0bagqvx143lfz2-gleam-1.7.0",
+              "path": "/nix/store/ygvzpnygrqs6gr2wnmg5yrfsj9n85k13-gleam-1.8.1",
               "default": true
             }
           ],
-          "store_path": "/nix/store/kn2dnjp6ggnnvf1lbi0bagqvx143lfz2-gleam-1.7.0"
+          "store_path": "/nix/store/ygvzpnygrqs6gr2wnmg5yrfsj9n85k13-gleam-1.8.1"
         }
       }
     }
