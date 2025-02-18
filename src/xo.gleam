@@ -1,6 +1,8 @@
 import gleam/list
 import gleam/option.{type Option, None, Some}
 import gleam/string
+import prng/seed.{type Seed}
+import xo/internal/ai
 import xo/internal/board.{type Board}
 import xo/internal/mark.{type Mark}
 import xo/internal/referee.{type Location, C1, C2, C3, D1, D2, R1, R2, R3}
@@ -35,7 +37,7 @@ pub fn start(player: Player) -> Game {
 pub type Position =
   #(Int, Int)
 
-pub fn play(game: Game, pos: Position) -> Result(Game, Error) {
+pub fn play(game: Game, pos: Position) -> Result(Game, PlayError) {
   case game {
     Playing(first, turn, board) ->
       case board.in_bounds(pos) {
@@ -62,7 +64,7 @@ pub fn play(game: Game, pos: Position) -> Result(Game, Error) {
   }
 }
 
-pub type Error {
+pub type PlayError {
   OutOfBounds(Position)
   Occupied(Position)
   GameAlreadyEnded
@@ -141,6 +143,22 @@ fn tile_to_string(tile: Tile) -> String {
     Some(X) -> "x"
     Some(O) -> "o"
     None -> "."
+  }
+}
+
+// AI
+
+pub fn get_random_move(game: Game, seed: Seed) -> Result(#(Position, Seed), Nil) {
+  case game {
+    Playing(_, _, board) -> ai.get_random_move(board, seed)
+    _ -> Error(Nil)
+  }
+}
+
+pub fn get_smart_moves(game: Game) -> List(Position) {
+  case game {
+    Playing(_, turn, board) -> ai.get_smart_moves(board, player_to_mark(turn))
+    _ -> []
   }
 }
 

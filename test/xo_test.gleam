@@ -1,6 +1,7 @@
 import gleeunit
 import gleeunit/should
 import helpers
+import prng/seed
 import xo.{
   type Game, type Outcome, type Player, Draw, GameAlreadyEnded, O, Occupied,
   OutOfBounds, Undecided, Win, X,
@@ -79,4 +80,27 @@ fn should_equal_state(
 
   #(state.first, state.turn, xo.to_string(game), state.outcome)
   |> should.equal(#(first, turn, layout, outcome))
+}
+
+pub fn get_random_move_test() {
+  X
+  |> helpers.play_many([
+    #(1, 1),
+    #(0, 0),
+    #(2, 2),
+    #(0, 2),
+    #(0, 1),
+    #(2, 1),
+    #(1, 2),
+    #(1, 0),
+  ])
+  |> xo.get_random_move(seed.new(12_346))
+  |> helpers.should_equal_move(#(2, 0))
+}
+
+pub fn get_smart_moves_test() {
+  X
+  |> helpers.play_many([#(0, 0), #(0, 2), #(1, 0), #(2, 1)])
+  |> xo.get_smart_moves()
+  |> should.equal([#(1, 1), #(1, 2), #(2, 0), #(2, 2)])
 }

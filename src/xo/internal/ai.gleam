@@ -17,15 +17,12 @@ pub fn get_random_move(
   }
 }
 
-pub fn get_smart_move(board: Board, mark: Mark) -> List(Position) {
+pub fn get_smart_moves(board: Board, mark: Mark) -> List(Position) {
   let open_positions = board.open_positions(board)
 
   case list.length(open_positions) {
     0 | 1 | 9 -> open_positions
-    _ ->
-      board
-      |> find_best_moves(mark, mark.swap(mark), open_positions)
-      |> list.reverse()
+    _ -> find_best_moves(board, mark, mark.swap(mark), open_positions)
   }
 }
 
@@ -61,7 +58,7 @@ fn find_best_moves(
           }
         })
 
-      final_state.positions
+      list.reverse(final_state.positions)
     }
 
     _ -> []
