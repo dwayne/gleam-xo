@@ -7,12 +7,7 @@ import xo/internal/board.{type Board}
 import xo/internal/mark.{type Mark}
 import xo/internal/referee.{type Location, C1, C2, C3, D1, D2, R1, R2, R3}
 
-// Game
-
-pub opaque type Game {
-  Playing(first: Player, turn: Player, board: Board)
-  GameOver(first: Player, turn: Player, board: Board, outcome: referee.Outcome)
-}
+// Player
 
 pub type Player {
   X
@@ -26,7 +21,12 @@ pub fn next_turn(player: Player) -> Player {
   }
 }
 
-// Create
+// Game
+
+pub opaque type Game {
+  Playing(first: Player, turn: Player, board: Board)
+  GameOver(first: Player, turn: Player, board: Board, outcome: referee.Outcome)
+}
 
 /// Start a new game such that the given player plays first.
 pub fn start(player: Player) -> Game {
@@ -37,6 +37,12 @@ pub fn start(player: Player) -> Game {
 
 pub type Position =
   #(Int, Int)
+
+pub type PlayError {
+  OutOfBounds(Position)
+  Occupied(Position)
+  GameAlreadyEnded
+}
 
 pub fn play(game: Game, pos: Position) -> Result(Game, PlayError) {
   case game {
@@ -63,12 +69,6 @@ pub fn play(game: Game, pos: Position) -> Result(Game, PlayError) {
 
     _ -> Error(GameAlreadyEnded)
   }
-}
-
-pub type PlayError {
-  OutOfBounds(Position)
-  Occupied(Position)
-  GameAlreadyEnded
 }
 
 pub type Rules {

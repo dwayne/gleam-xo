@@ -2,6 +2,8 @@
 
 A [Tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe) library for Gleam.
 
+## An example
+
 ```gleam
 import gleam/io
 import gleam/string
@@ -11,6 +13,10 @@ pub fn main() {
   let game0 = xo.start(X)
   let assert Ok(game1) = xo.play(game0, #(1, 1)) // X
   let assert Ok(game2) = xo.play(game1, #(0, 0)) // O
+
+  let assert Error(xo.OutOfBounds(#(3, 3))) = xo.play(game2, #(3, 3))
+  let assert Error(xo.Occupied(#(1, 1))) = xo.play(game2, #(1, 1))
+
   let assert Ok(game3) = xo.play(game2, #(2, 2)) // X
   let assert Ok(game4) = xo.play(game3, #(2, 1)) // O
 
@@ -39,4 +45,24 @@ pub fn main() {
   //          |  |_____ turn
   //          |________ first
 }
+```
+
+## The public API at a glance
+
+```txt
+Player, next_turn
+
+Game, start
+
+Position, PlayError, play
+
+Rules, default_rules, play_again
+
+State, Outcome, Line, to_state
+
+Tile, map
+
+to_string
+
+get_random_move, get_smart_moves
 ```
