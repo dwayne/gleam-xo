@@ -1,5 +1,8 @@
 # xo
 
+[![Package Version](https://img.shields.io/hexpm/v/xo)](https://hex.pm/packages/xo)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/xo/)
+
 A [Tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe) library for Gleam.
 
 ## An example
